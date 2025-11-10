@@ -10,50 +10,88 @@
 
   <!-- Navbar -->
   <header class="flex justify-between items-center px-10 py-4 bg-white/10 backdrop-blur-md shadow-md text-white">
-  <!-- img and title -->
-  <div class="flex items-center justify-center gap-5">
-    <img class="w-10" src="https://img.icons8.com/?size=160&id=oBUuH4x96nM9&format=png" alt="Logo">
-    <h1 class="text-sm font-semibold tracking-wide">Weather Forecast</h1>
-  </div>
-
-  <!--home and application -->
-  <nav class="flex gap-8 text-sm font-medium">
-    <a href="#" class="hover:text-sky-300 transition underline underline-offset-5">Home</a>
-    <a href="#" class="hover:text-sky-300 transition">Application</a>
-  </nav>
-
-
-  <div class="flex items-center gap-6 text-sm">
-    <!--time-->
-    <div class="flex items-center gap-1">
-      🕒 <span id="time">09:46 AM</span>
+    <div class="flex items-center justify-center gap-5">
+      <img class="w-10" src="https://img.icons8.com/?size=160&id=oBUuH4x96nM9&format=png" alt="Logo">
+      <h1 class="text-sm font-semibold tracking-wide">Weather Forecast</h1>
     </div>
-    <span>|</span>
-    <!--date-->
-    <div class="flex items-center gap-1">
-      📅 <span id="date">29 Dec 2023</span>
+
+    <nav class="flex gap-8 text-sm font-medium">
+      <a href="#" class="hover:text-sky-300 transition underline underline-offset-5">Home</a>
+      <a href="#" class="hover:text-sky-300 transition">Application</a>
+    </nav>
+
+    <div class="flex items-center gap-6 text-sm">
+      <div class="flex items-center gap-1">
+        🕒 <span id="time">09:46 AM</span>
+      </div>
+      <span>|</span>
+      <div class="flex items-center gap-1">
+        📅 <span id="date">29 Dec 2023</span>
+      </div>
+      <span>|</span>
+      <div class="flex items-center gap-2">
+        <span class="hidden sm:inline">Hey!</span>
+        <span class="font-semibold">Cristina</span>
+        <img class="w-8 h-8 rounded-full border-2 border-sky-200" src="https://cdn-icons-png.flaticon.com/512/2922/2922561.png" alt="User">
+      </div>
     </div>
-    <span>|</span>
-    <!--user-->
-    <div class="flex items-center gap-2">
-      <span class="hidden sm:inline">Hey!</span>
-      <span class="font-semibold">Cristina</span>
-      <img class="w-8 h-8 rounded-full border-2 border-sky-200" src="https://cdn-icons-png.flaticon.com/512/2922/2922561.png" alt="User">
-    </div>
-  </div>
-</header>
+  </header>
 
   <!-- Search -->
-  <div class="flex justify-center mt-6">
-    <input id="city" type="text" placeholder="Enter your city"
-      class="w-64 h-10 bg-white/20 border border-white/30 rounded-md px-3 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-sky-400">
-    <button id="search"
-      class="ml-3 h-10 px-6 bg-sky-600 hover:bg-sky-700 rounded-md font-semibold">
-      Search
-    </button>
+  <div class="flex justify-center gap-3 mt-6">
+    <input id="city" type="text" placeholder="Enter city name..." class="px-4 py-2 rounded-lg text-gray-800 focus:outline-none w-64">
+    <button id="search" class="px-4 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg text-white font-medium transition">Search</button>
   </div>
 
-  
+   <!-- Main Weather Section -->
+  <main id="display" class="flex-1 flex justify-center items-center px-12 mt-8 hidden">
+
+    <!-- Left side info -->
+    <section class="max-w-md">
+      <h1 class="text-6xl font-bold leading-tight" id="weatherMain">Stormy</h1>
+      <p class="text-3xl text-sky-100 mb-4" id="weatherDesc">with Heavy Rain</p>
+      <p class="text-sm text-sky-200 leading-relaxed" id="weatherDetail">
+        Variable clouds with rain showers. Winds at 10 to 20 mph.
+      </p>
+
+      <div class="mt-8 flex gap-10 text-center text-sm">
+        <div>
+          <p id="city1" class="text-3xl font-semibold">12°</p>
+          <p class="text-sky-200">Washington D.C</p>
+        </div>
+        <div>
+          <p id="city2" class="text-3xl font-semibold">17°</p>
+          <p class="text-sky-200">Oklahoma City</p>
+        </div>
+        <div>
+          <p id="city3" class="text-3xl font-semibold">14°</p>
+          <p class="text-sky-200">Philadelphia</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Center Cloud -->
+    <section class="relative flex flex-col items-center">
+      <img id="icon" src="./assests/cloud.png" alt="Weather icon" class="w-72 drop-shadow-lg">
+      <div class="absolute bottom-0 h-10 w-56 bg-gradient-to-t from-white/20 to-transparent rounded-full blur-md"></div>
+    </section>
+
+    <!-- Right Details -->
+    <section class="flex flex-col items-end text-right space-y-3">
+      <h2 id="temperature" class="text-7xl font-bold">27°</h2>
+      <p class="text-sm">WIND: <span id="wind">6 MPH</span></p>
+      <p class="text-sm">UV INDEX: <span id="uv">0 OF 10</span></p>
+      <p class="text-sm">CITY: <span id="cityName">New York City</span></p>
+
+      <div class="mt-6 space-y-3 text-sm">
+        <p>Pennsylvania: <span id="pa">18°C</span></p>
+        <p>Massachusetts: <span id="ma">24°C</span></p>
+        <p>New York: <span id="ny">27°C</span></p>
+        <p>North Carolina: <span id="nc">-2°C</span></p>
+      </div>
+    </section>
+
+  </main>
 
     <script src="./index.js"></script>
 </body>

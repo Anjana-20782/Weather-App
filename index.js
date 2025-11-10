@@ -1,5 +1,5 @@
 
- function updateDateTime() {
+  function updateDateTime() {
     const now = new Date();
     document.getElementById("time").textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     document.getElementById("date").textContent = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -23,7 +23,19 @@ document.getElementById("search").addEventListener("click", async () => {
         }
 
         let data = await res.json();
-        console.log(data);
+        const clouds = data.clouds.all;
+  
+
+      const cloudyBg =
+        "url('https://images.pexels.com/photos/209831/pexels-photo-209831.jpeg?cs=srgb&dl=pexels-pixabay-209831.jpg&fm=jpg')";
+      const clearBg =
+        "url('https://t3.ftcdn.net/jpg/14/63/72/50/360_F_1463725010_Omm579saIDvqCYqXN3rBRbTQ0SBR0sby.jpg')";
+  
+   
+      document.body.style.backgroundImage = clouds >= 80 ? cloudyBg : clearBg;
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundPosition = "center";
+      document.body.style.transition = "background-image 2s ease-in-out";
 
         let temp = (data.main.temp - 273.15).toFixed(1);
         let feels = (data.main.feels_like - 273.15).toFixed(1);
