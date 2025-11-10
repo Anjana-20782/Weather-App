@@ -6,13 +6,81 @@
     <title>Document</title>
       <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-    
-    <div class="navbar h-20 w-screen bg-sky-100 flex items-center justify-center gap-3">
-    <input type="text" placeholder="Enter your city" id="city" class="w-60 h-10 border-1 rounded-sm p-3">
-    <button id="search" class="h-10 w-30 border-1 bg-sky-800 text-white rounded-sm">Search</button>
+<body class="bg-[url('./assests/sky.jpg')] bg-cover bg-no-repeat bg-center text-white min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="flex justify-between items-center px-10 py-4 bg-white/10 backdrop-blur-md shadow-md">
+    <div class="text-lg font-semibold tracking-wide">Weather Forecast</div>
+    <nav class="flex gap-6 text-sm">
+      <a href="#" class="hover:text-sky-300">Home</a>
+      <a href="#" class="hover:text-sky-300">Application</a>
+    </nav>
+    <div class="flex items-center gap-2 text-sm">
+      <p>🕒 <span id="time"></span></p>
+      <p>|</p>
+      <p>📅 <span id="date"></span></p>
     </div>
-     <div id="display"></div>
+  </header>
+
+  <!-- Search -->
+  <div class="flex justify-center mt-6">
+    <input id="city" type="text" placeholder="Enter your city"
+      class="w-64 h-10 bg-white/20 border border-white/30 rounded-md px-3 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-sky-400">
+    <button id="search"
+      class="ml-3 h-10 px-6 bg-sky-600 hover:bg-sky-700 rounded-md font-semibold">
+      Search
+    </button>
+  </div>
+
+  <!-- Main Weather Section -->
+  <main id="display" class="flex-1 flex justify-between items-center px-12 mt-8 hidden">
+
+    <!-- Left side info -->
+    <section class="max-w-md">
+      <h1 class="text-6xl font-bold leading-tight" id="weatherMain">Stormy</h1>
+      <p class="text-3xl text-sky-100 mb-4" id="weatherDesc">with Heavy Rain</p>
+      <p class="text-sm text-sky-200 leading-relaxed" id="weatherDetail">
+        Variable clouds with rain showers. Winds at 10 to 20 mph.
+      </p>
+
+      <div class="mt-8 flex gap-10 text-center text-sm">
+        <div>
+          <p id="city1" class="text-3xl font-semibold">12°</p>
+          <p class="text-sky-200">Washington D.C</p>
+        </div>
+        <div>
+          <p id="city2" class="text-3xl font-semibold">17°</p>
+          <p class="text-sky-200">Oklahoma City</p>
+        </div>
+        <div>
+          <p id="city3" class="text-3xl font-semibold">14°</p>
+          <p class="text-sky-200">Philadelphia</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Center Cloud -->
+    <section class="relative flex flex-col items-center">
+      <img id="icon" src="./assests/cloud.png" alt="Weather icon" class="w-72 drop-shadow-lg">
+      <div class="absolute bottom-0 h-10 w-56 bg-gradient-to-t from-white/20 to-transparent rounded-full blur-md"></div>
+    </section>
+
+    <!-- Right Details -->
+    <section class="flex flex-col items-end text-right space-y-3">
+      <h2 id="temperature" class="text-7xl font-bold">27°</h2>
+      <p class="text-sm">WIND: <span id="wind">6 MPH</span></p>
+      <p class="text-sm">UV INDEX: <span id="uv">0 OF 10</span></p>
+      <p class="text-sm">CITY: <span id="cityName">New York City</span></p>
+
+      <div class="mt-6 space-y-3 text-sm">
+        <p>Pennsylvania: <span id="pa">18°C</span></p>
+        <p>Massachusetts: <span id="ma">24°C</span></p>
+        <p>New York: <span id="ny">27°C</span></p>
+        <p>North Carolina: <span id="nc">-2°C</span></p>
+      </div>
+    </section>
+
+  </main>
 
 
     <script src="./index.js"></script>

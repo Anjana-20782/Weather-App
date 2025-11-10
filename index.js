@@ -1,70 +1,82 @@
-
 document.getElementById("search").addEventListener("click", async () => {
-  let city = document.getElementById("city").value;
+      let city = document.getElementById("city").value.trim();
+      if (!city) return alert("Enter a city name");
 
-  try {
-    let res = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=34f987f46a88c97f70220b670fc353a9`
-    );
+      try {
+        let res = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=34f987f46a88c97f70220b670fc353a9`
+        );
 
-    if (res.status!==200) {
-      return alert("City not found");
-    }
+        if (res.status !== 200) {
+          return alert("City not found");
+        }
 
-    let data = await res.json();
-    console.log(data);
+        let data = await res.json();
+        console.log(data);
 
-    let str = `
-    <h2>${data.name}</h2>
+        let temp = (data.main.temp - 273.15).toFixed(1);
+        let feels = (data.main.feels_like - 273.15).toFixed(1);
+        let min = (data.main.temp_min - 273.15).toFixed(1);
+        let max = (data.main.temp_max - 273.15).toFixed(1);
 
-      <h3>Coordinates</h3>
-      <p><b>Longitude:</b> ${data.coord.lon}</p>
-      <p><b>Latitude:</b> ${data.coord.lat}</p>
+        document.getElementById("display").innerHTML = `
 
-      <h3>Weather</h3>
-      <p><b>Main:</b> ${data.weather[0].main}</p>
-      <p><b>Description:</b> ${data.weather[0].description}</p>
-      <p><b>Icon:</b> <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="${data.weather[0].main}"></p>
-      <p><b>Weather ID:</b> ${data.weather[0].id}</p>
+          <div class="flex flex-col items-center gap-6">
+            <h2 class="text-3xl font-bold tracking-wide">${data.name}, ${data.sys.country}</h2>
+            <p class="text-sky-100 text-sm">${new Date().toDateString()}</p>
 
-      <h3>Main Details</h3>
-      <p><b>Temperature:</b> ${(data.main.temp - 273.15).toFixed(2)}°C</p>
-      <p><b>Feels Like:</b> ${(data.main.feels_like - 273.15).toFixed(2)}°C</p>
-      <p><b>Min Temp:</b> ${(data.main.temp_min - 273.15).toFixed(2)}°C</p>
-      <p><b>Max Temp:</b> ${(data.main.temp_max - 273.15).toFixed(2)}°C</p>
-      <p><b>Pressure:</b> ${data.main.pressure} hPa</p>
-      <p><b>Humidity:</b> ${data.main.humidity}%</p>
-      <p><b>Sea Level:</b> ${data.main.sea_level || "N/A"}</p>
-      <p><b>Ground Level:</b> ${data.main.grnd_level || "N/A"}</p>
+            <div class="flex flex-col items-center">
+              <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png"
+                alt="${data.weather[0].main}" class="w-40">
+              <h1 class="text-7xl font-semibold">${temp}°C</h1>
+              <p class="text-xl capitalize">${data.weather[0].description}</p>
+            </div>
 
-      <h3>Wind</h3>
-      <p><b>Speed:</b> ${data.wind.speed} m/s</p>
-      <p><b>Direction:</b> ${data.wind.deg}°</p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-6 text-sm">
+              <div class="bg-white/20 rounded-lg p-3 backdrop-blur-md">
+                <p class="text-sky-100">Feels Like</p>
+                <p class="text-lg font-semibold">${feels}°C</p>
+              </div>
+              <div class="bg-white/20 rounded-lg p-3 backdrop-blur-md">
+                <p class="text-sky-100">Humidity</p>
+                <p class="text-lg font-semibold">${data.main.humidity}%</p>
+              </div>
+              <div class="bg-white/20 rounded-lg p-3 backdrop-blur-md">
+                <p class="text-sky-100">Wind</p>
+                <p class="text-lg font-semibold">${data.wind.speed} m/s</p>
+              </div>
+              <div class="bg-white/20 rounded-lg p-3 backdrop-blur-md">
+                <p class="text-sky-100">Pressure</p>
+                <p class="text-lg font-semibold">${data.main.pressure} hPa</p>
+              </div>
+            </div>
 
-      <h3>Clouds</h3>
-      <p><b>Cloudiness:</b> ${data.clouds.all}%</p>
+            <div class="flex flex-wrap justify-center gap-6 mt-6 text-sm">
+              <div class="bg-white/20 rounded-lg p-3 backdrop-blur-md">
+                <p class="text-sky-100">Min Temp</p>
+                <p class="text-lg font-semibold">${min}°C</p>
+              </div>
+              <div class="bg-white/20 rounded-lg p-3 backdrop-blur-md">
+                <p class="text-sky-100">Max Temp</p>
+                <p class="text-lg font-semibold">${max}°C</p>
+              </div>
+              <div class="bg-white/20 rounded-lg p-3 backdrop-blur-md">
+                <p class="text-sky-100">Clouds</p>
+                <p class="text-lg font-semibold">${data.clouds.all}%</p>
+              </div>
+              <div class="bg-white/20 rounded-lg p-3 backdrop-blur-md">
+                <p class="text-sky-100">Visibility</p>
+                <p class="text-lg font-semibold">${(data.visibility / 1000).toFixed(1)} km</p>
+              </div>
+            </div>
+          </div>
+          
+        `;
 
-      <h3>System Info</h3>
-      <p><b>Country:</b> ${data.sys.country}</p>
-      <p><b>Sunrise:</b> ${new Date(data.sys.sunrise * 1000).toLocaleTimeString()}</p>
-      <p><b>Sunset:</b> ${new Date(data.sys.sunset * 1000).toLocaleTimeString()}</p>
-      <p><b>System Type:</b> ${data.sys.type || "N/A"}</p>
-      <p><b>System ID:</b> ${data.sys.id || "N/A"}</p>
+        document.getElementById("display").classList.remove("hidden");
 
-      <h3>Other</h3>
-      <p><b>Visibility:</b> ${data.visibility / 1000} km</p>
-      <p><b>Timezone:</b> ${data.timezone} seconds</p>
-      <p><b>Base:</b> ${data.base}</p>
-      <p><b>City ID:</b> ${data.id}</p>
-      <p><b>Code:</b> ${data.cod}</p>
-      <p><b>Data Time (Unix):</b> ${data.dt}</p>
-    `;
-
-    document.getElementById("display").innerHTML = str;
-
-  } catch (error) {
-    console.log(error);
-    // alert("Something went wrong. Please try again.");
-  }
-});
-
+      } catch (err) {
+        console.log(err);
+        alert("Something went wrong. Please try again.");
+      }
+    });
